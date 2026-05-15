@@ -46,7 +46,7 @@ def get_today_schedule():
     df = pd.read_csv(
         WEEKLY_SHEET_URL,
         encoding="utf-8-sig",
-        dtype={"phone": str, "tong_cbcs": str, "cbcs_truc": str}  # Ép tất cả cột dạng số thành str
+        dtype={"ngay": str, "chi_huy": str, "phone": str, "tong_cbcs": str, "cbcs_truc": str}  # Ép tất cả cột dạng số thành str
     )
     
     today_name = datetime.datetime.now().strftime("%A")
@@ -62,6 +62,7 @@ def get_today_schedule():
     phone = "" if phone_raw in ("nan", "None", "") else phone_raw
 
     return {
+        "ngay": str(row['ngay']).strip(),
         "chi_huy": str(row['chi_huy']).strip(),
         "phone":     phone,
         "tong_cbcs": str(row['tong_cbcs']).strip(),

@@ -11,7 +11,9 @@ from services.auth_service import login
 
 from services.schedule_service import (
     open_schedule_page,
-    check_schedule_exists
+    check_schedule_exists,
+    get_trang_thai,
+    set_trang_thai
 )
 
 from services.form_service import (
@@ -61,6 +63,14 @@ try:
     print("✅ Đọc lịch trực thành công") 
     print(schedule_data)
 
+
+    trang_thai = get_trang_thai()
+    print(f"📋 Trạng thái: {trang_thai}")
+    if trang_thai != "ON":
+        print("⏭️ Trạng thái OFF → Bỏ qua")
+        exit(0)    
+        
+    
     print("--------------------------------------------------")
 
     print("📋 THÔNG TIN LỊCH TRỰC")
@@ -176,6 +186,9 @@ try:
 
             print("✅ Đã gửi Telegram")
 
+            if schedule_data.get("ngay") == "Sunday":
+                set_trang_thai("OFF")
+
             print("==================================================")
             print("⛔ KẾT THÚC")
             print("==================================================")
@@ -255,10 +268,13 @@ try:
 
         print("✅ Đã gửi Telegram")
 
+        if schedule_data.get("ngay") == "Sunday":
+            set_trang_thai("OFF")
+            print("==================================================")
         print("==================================================")
         print("🎉 HOÀN THÀNH AUTOSCHEDULE")
         print("==================================================")
-
+        
         browser.close()
         # page.pause()
 

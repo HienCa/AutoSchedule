@@ -1,6 +1,13 @@
-from datetime import datetime, timedelta
-import sys
+import os
+import json
+import gspread
+from google.oauth2.service_account import Credentials
 
+from datetime import datetime
+
+from config.settings import (
+    WEEKLY_SHEET_URL
+)
 
 def open_schedule_page(page):
 
@@ -105,3 +112,64 @@ def check_schedule_exists(page):
     print("✅ Chưa có lịch trực")
 
     return False
+
+import os
+import json
+import gspread
+
+from google.oauth2.service_account import Credentials
+
+from config.settings import WEEKLY_SHEET_URL
+
+
+def get_gsheet():
+
+    scope = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+
+    # =========================================
+    # SERVER / CLOUD
+    # =========================================
+
+    google_credentials = os.getenv("GOOGLE_CREDENTIALS")
+
+    if google_credentials:
+
+        creds_dict = json.loads(google_credentials)
+
+        creds = Credentials.from_service_account_info(
+            creds_dict,
+            scopes=scope
+        )
+
+    # =========================================
+    # LOCAL
+    # =========================================
+
+    else:
+
+        creds = Credentials.from_service_account_file(
+            "credentials.json",
+            scopes=scope
+        )
+
+    client = gspread.authorize(creds)
+
+    return client.open_by_url(
+        WEEKLY_SHEET_URL
+    ).sheet1
+
+def get_trang_thai():
+    """Đọc trạng thái ON/OFF từ 1 ô trong sheet."""
+    sheet = get_gsheet()
+    # Ô B1 chứa trạng thái
+    trang_thai = sheet.acell('G2').value
+    return str(trang_thai).strip().upper()
+
+def set_trang_thai( value: str):
+    """Cập nhật trạng thái ON/OFF."""
+    sheet = get_gsheet()
+    sheet.update_acell('G2', value)
+    print(f"✅ Trạng thái → {value}")

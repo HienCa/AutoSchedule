@@ -1,7 +1,5 @@
 playwright
 pandas
-openpyxl
-load_dotenv
-datetime
-requests
-io
+gspread
+oauth2client
+schedule
