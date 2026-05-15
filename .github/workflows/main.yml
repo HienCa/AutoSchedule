@@ -1,0 +1,34 @@
+name: Auto Schedule Bot
+
+on:
+  schedule:
+    - cron: '05 0 * * *'   # 7h05 sáng GMT+7
+    - cron: '00 1 * * *'   # 8h00 sáng GMT+7
+  workflow_dispatch:        # Chạy thủ công khi cần
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browsers
+        run: playwright install chromium --with-deps
+
+      - name: Write credentials
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
+
+      - name: Run bot
+        env:
+          WEEKLY_SHEET_URL: ${{ secrets.WEEKLY_SHEET_URL }}
+        run: python main.py
