@@ -1,34 +1,91 @@
 name: Auto Schedule Bot
 
 on:
+
   schedule:
-    - cron: '05 0 * * *'   # 7h05 sáng GMT+7
-    - cron: '00 1 * * *'   # 8h00 sáng GMT+7
-  workflow_dispatch:        # Chạy thủ công khi cần
+    # 07:05 sáng VN (UTC+7)
+    - cron: '5 0 * * *'
+
+    # 08:00 sáng VN (UTC+7)
+    - cron: '0 1 * * *'
+
+  workflow_dispatch:
 
 jobs:
+
   run-bot:
+
     runs-on: ubuntu-latest
 
+    timeout-minutes: 30
+
     steps:
+
+      # ==================================================
+      # CHECKOUT
+      # ==================================================
+
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      # ==================================================
+      # PYTHON
+      # ==================================================
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
+
+      # ==================================================
+      # INSTALL
+      # ==================================================
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+
+      # ==================================================
+      # PLAYWRIGHT
+      # ==================================================
 
       - name: Install Playwright browsers
-        run: playwright install chromium --with-deps
+        run: |
+          playwright install chromium --with-deps
 
-      - name: Write credentials
-        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
+      # ==================================================
+      # GOOGLE CREDENTIALS
+      # ==================================================
+
+      - name: Write credentials.json
+        run: |
+          echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
+
+      # ==================================================
+      # RUN BOT
+      # ==================================================
 
       - name: Run bot
         env:
           WEEKLY_SHEET_URL: ${{ secrets.WEEKLY_SHEET_URL }}
-        run: python main.py
+
+          TTCH_USERNAME: ${{ secrets.TTCH_USERNAME }}
+          TTCH_PASSWORD: ${{ secrets.TTCH_PASSWORD }}
+
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+        run: |
+          python main.py
+
+      # ==================================================
+      # UPLOAD SCREENSHOTS IF ERROR
+      # ==================================================
+
+      - name: Upload screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: screenshots/
