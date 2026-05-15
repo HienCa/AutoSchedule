@@ -26,7 +26,7 @@ def open_schedule_page(page):
 
     page.wait_for_selector(
         "text=Quản trị",
-        timeout=20000
+        timeout=30000
     )
 
     quan_tri_button = page.locator(
@@ -47,7 +47,7 @@ def open_schedule_page(page):
 
     page.wait_for_selector(
         "text=Lịch trực sẵn sàng chữa cháy, cứu nạn, cứu hộ",
-        timeout=20000
+        timeout=30000
     )
 
     lich_truc_button = page.locator(

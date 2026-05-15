@@ -36,3 +36,4 @@ def safe_fill(page, locator, value):
     locator.scroll_into_view_if_needed()
 
     locator.fill(str(value))
+

@@ -58,7 +58,8 @@ try:
 
     schedule_data = get_today_schedule()
 
-    print("✅ Đọc lịch trực thành công")
+    print("✅ Đọc lịch trực thành công") 
+    print(schedule_data)
 
     print("--------------------------------------------------")
 
@@ -130,60 +131,60 @@ try:
         print("🔍 KIỂM TRA LỊCH TRỰC HÔM NAY")
         print("==================================================")
 
-        # exists = check_schedule_exists(page)
+        exists = check_schedule_exists(page)
 
-        # # ==================================================
-        # # ĐÃ TỒN TẠI
-        # # ==================================================
+        # ==================================================
+        # ĐÃ TỒN TẠI
+        # ==================================================
 
-        # if exists:
+        if exists:
 
-        #     print("⚠️ LỊCH TRỰC HÔM NAY ĐÃ TỒN TẠI")
+            print("⚠️ LỊCH TRỰC HÔM NAY ĐÃ TỒN TẠI")
 
-        #     ensure_screenshot_folder()
+            ensure_screenshot_folder()
 
-        #     existed_image = (
-        #         "screenshots/existed.png"
-        #     )
+            existed_image = (
+                "screenshots/existed.png"
+            )
 
-        #     page.screenshot(
-        #         path=existed_image,
-        #         full_page=True
-        #     )
+            page.screenshot(
+                path=existed_image,
+                full_page=True
+            )
 
-        #     print(
-        #         f"📸 Đã chụp màn hình: {existed_image}"
-        #     )
+            print(
+                f"📸 Đã chụp màn hình: {existed_image}"
+            )
 
-        #     # ==========================================
-        #     # TELEGRAM
-        #     # ==========================================
+            # ==========================================
+            # TELEGRAM
+            # ==========================================
 
-        #     print("📨 Đang gửi Telegram...")
+            print("📨 Đang gửi Telegram...")
 
-        #     send_telegram_message(
-        #         "⚠️ Lịch trực hôm nay đã tồn tại"
-        #     )
+            send_telegram_message(
+                "⚠️ Lịch trực hôm nay đã tồn tại"
+            )
 
-        #     send_telegram_photo(
-        #         existed_image,
-        #         caption=(
-        #             "📸 Lịch trực hôm nay "
-        #             "đã tồn tại trên hệ thống"
-        #         )
-        #     )
+            send_telegram_photo(
+                existed_image,
+                caption=(
+                    "📸 Lịch trực hôm nay "
+                    "đã tồn tại trên hệ thống"
+                )
+            )
 
-        #     print("✅ Đã gửi Telegram")
+            print("✅ Đã gửi Telegram")
 
-        #     print("==================================================")
-        #     print("⛔ KẾT THÚC")
-        #     print("==================================================")
+            print("==================================================")
+            print("⛔ KẾT THÚC")
+            print("==================================================")
 
-        #     browser.close()
+            browser.close()
 
-        #     exit()
+            exit()
 
-        # print("✅ Chưa có lịch trực hôm nay")
+        print("✅ Chưa có lịch trực hôm nay")
 
         # ==================================================
         # MỞ FORM
@@ -259,6 +260,7 @@ try:
         print("==================================================")
 
         browser.close()
+        # page.pause()
 
 # =========================================================
 # ERROR

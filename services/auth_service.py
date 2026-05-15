@@ -1,4 +1,5 @@
 from config.settings import (
+    WEB_URL,
     TTCH_USERNAME,
     TTCH_PASSWORD
 )
@@ -10,7 +11,7 @@ from utils.playwright_utils import (
 
 def login(page):
 
-    page.goto("https://ttch.csdlcbcs.vn")
+    page.goto(WEB_URL)
 
     username_input = page.locator(
         'input[placeholder="Nhập tên đăng nhập của bạn"]'

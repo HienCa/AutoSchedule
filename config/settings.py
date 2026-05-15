@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+WEB_URL = os.getenv("WEB_URL")
 TTCH_USERNAME = os.getenv("TTCH_USERNAME")
 TTCH_PASSWORD = os.getenv("TTCH_PASSWORD")
 
