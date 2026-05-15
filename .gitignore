@@ -2,5 +2,5 @@
 credentials.json
 status.txt
 error.log
-__pycache__/
+services/__pycache__/
 *.pyc

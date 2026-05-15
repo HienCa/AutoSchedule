@@ -112,5 +112,37 @@ def fill_schedule_form(page, schedule_data, config_data):
         except Exception as e:
             print(f"❌ Lỗi field: {field_name}")
             print(f"Chi tiết: {e}")
+    
+    submit_schedule(page)
 
 
+def submit_schedule(page):
+
+    print("🔄 Đang lưu lịch trực...")
+
+    try:
+
+        # ưu tiên tìm theo id
+        submit_button = page.locator(
+            '#online-calendar-create_button'
+        )
+
+        submit_button.wait_for(
+            state="visible",
+            timeout=5000
+        )
+
+    except:
+
+        print("⚠️ Không tìm thấy button bằng id")
+        print("🔄 Chuyển sang tìm theo text...")
+
+        submit_button = page.locator(
+            'button:has-text("Thêm mới")'
+        ).last
+
+    safe_click(page, submit_button)
+
+    page.wait_for_load_state("networkidle")
+
+    print("✅ Đã thêm mới lịch trực")
