@@ -3,14 +3,9 @@ def create_browser(p):
         headless=True,
         slow_mo=1000,
         args=[
-            # "--start-maximized",
-            # "--disable-infobars",
-            # "--no-sandbox"
             "--no-sandbox",
             "--disable-setuid-sandbox",
-            "--disable-dev-shm-usage",  # Quan trọng trên Linux
-            "--disable-gpu",
-            "--single-process"
+            "--disable-dev-shm-usage",
         ]
     )
 
