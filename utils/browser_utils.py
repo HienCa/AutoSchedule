@@ -1,11 +1,16 @@
 def create_browser(p):
     browser = p.chromium.launch(
-        headless=True,
+        headless=False,
         slow_mo=1000,
         args=[
-            "--start-maximized",
-            "--disable-infobars",
-            "--no-sandbox"
+            # "--start-maximized",
+            # "--disable-infobars",
+            # "--no-sandbox"
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",  # Quan trọng trên Linux
+            "--disable-gpu",
+            "--single-process"
         ]
     )
 
@@ -14,7 +19,7 @@ def create_browser(p):
     )
 
     page = context.new_page()
-    page.set_default_timeout(30000)
+    page.set_default_timeout(60000)
 
     # Maximize qua CDP
     session = context.new_cdp_session(page)

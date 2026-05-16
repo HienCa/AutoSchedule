@@ -2,5 +2,7 @@
 credentials.json
 status.txt
 error.log
-services/__pycache__/
+__pycache__/
 *.pyc
+*.pyo
+*.pyd

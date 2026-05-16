@@ -11,7 +11,12 @@ from utils.playwright_utils import (
 
 def login(page):
 
-    page.goto(WEB_URL)
+    page.goto(
+        WEB_URL, 
+        wait_until="domcontentloaded",
+        timeout=60000)
+    
+    page.wait_for_timeout(10000)
 
     username_input = page.locator(
         'input[placeholder="Nhập tên đăng nhập của bạn"]'

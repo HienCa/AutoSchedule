@@ -30,7 +30,7 @@ def safe_fill(page, locator, value):
 
     locator.wait_for(
         state="visible",
-        timeout=15000
+        timeout=30000
     )
 
     locator.scroll_into_view_if_needed()
