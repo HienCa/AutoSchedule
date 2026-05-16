@@ -71,6 +71,8 @@ jobs:
 
       - name: Run bot
         env:
+          WEB_URL: ${{ secrets.WEB_URL }}
+          
           WEEKLY_SHEET_URL: ${{ secrets.WEEKLY_SHEET_URL }}
 
           TTCH_USERNAME: ${{ secrets.TTCH_USERNAME }}
