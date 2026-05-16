@@ -1,6 +1,6 @@
 def create_browser(p):
     browser = p.chromium.launch(
-        headless=False,
+        headless=True,
         slow_mo=1000,
         args=[
             # "--start-maximized",
